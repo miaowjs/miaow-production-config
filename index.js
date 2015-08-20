@@ -64,12 +64,11 @@ var config = {
 	module: {
 		tasks: [
 			{
-				test: /(require|jquery)\.js$/,
+				test: /(require|jquery|jquery\/.*)\.js$/,
 				plugins: [
 					jsMini
 				]
 			},
-
 			{
 				test: /\.js$/,
 				plugins: [
