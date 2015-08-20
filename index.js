@@ -141,6 +141,20 @@ var config = {
 			},
 
 			{
+				test: /\.htm[l]?$/,
+				plugins: [
+					urlParse,
+					{
+						plugin: replace,
+						option: {
+							replace: [{test: /__debug__/g, value: 'false'}]
+						}
+					},
+					inlineContentParse
+				]
+			},
+
+			{
 				test: /\.png$/,
 				plugins: [
 					pngMini
