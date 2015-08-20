@@ -23,7 +23,7 @@ var cssUrlParse = {
 var inlineContentParse = {
 	plugin: inlineParse,
 	option: {
-		regexp: /((?:\/\*|<!--)\s*inline\s+['"]([\w\_\/\.\-]+)['"](?:\*\/|-->))/g,
+		regexp: /((?:\/\*|<!--)\s*inline\s+['"]([\w\_\/\.\-]+)['"]\s*(?:\*\/|-->))/g,
 		type: 'content'
 	}
 };
