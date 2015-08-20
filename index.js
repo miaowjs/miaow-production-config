@@ -132,7 +132,7 @@ var config = {
 						plugin: ftlParse,
 						option: {
 							macroNameList: ['static', 'docHead', 'docFoot', 'jsFile', 'cssFile'],
-							macroArgList: ['js', 'css', 'file'],
+							macroArgList: ['js', 'css', 'file', 'mockjax'],
 							macroDebug: false
 						}
 					},
