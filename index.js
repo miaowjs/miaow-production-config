@@ -1,3 +1,6 @@
+var async = require('async');
+var fs = require('fs-extra');
+var glob = require('glob');
 var path = require('path');
 
 var amdParse = require('miaow-amd-parse');
@@ -190,7 +193,31 @@ var config = {
 		extensionAlias: {
 			'.css': ['.less']
 		}
-	}
+	},
+
+	nextTasks: [
+		moveFile
+	]
 };
+
+function moveFile(option, cb) {
+	var cwd = this.config.output;
+
+	glob('**/*', {
+		dot: true,
+		cwd: cwd,
+		nodir: true
+	}, function (err, files) {
+		if (err) {
+			return cb(err);
+		}
+
+		async.each(files, function (file, cb) {
+			var target = /\.ftl$/.test(file) ? 'FE' : 'html';
+
+			fs.move(path.resolve(cwd, file), path.resolve(cwd, target, file), cb);
+		}, cb);
+	});
+}
 
 module.exports = config;
