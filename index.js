@@ -2,6 +2,9 @@ var async = require('async');
 var fs = require('fs-extra');
 var glob = require('glob');
 var path = require('path');
+var temp = require('temp');
+
+temp.track();
 
 var amdParse = require('miaow-amd-parse');
 var autoprefixer = require('miaow-css-autoprefixer');
@@ -202,22 +205,29 @@ var config = {
 
 function moveFile(option, cb) {
 	var cwd = this.config.output;
+	var tempDir = temp.mkdirSync();
 
-	glob('**/*', {
-		dot: true,
-		cwd: cwd,
-		nodir: true
-	}, function (err, files) {
-		if (err) {
-			return cb(err);
+	async.series([
+		fs.copy.bind(fs, cwd, tempDir),
+		fs.emptyDir.bind(fs, cwd),
+		function (cb) {
+			glob('**/*', {
+				dot: true,
+				cwd: tempDir,
+				nodir: true
+			}, function (err, files) {
+				if (err) {
+					return cb(err);
+				}
+
+				async.each(files, function (file, cb) {
+					var target = /\.ftl$/.test(file) ? 'FE' : 'html';
+
+					fs.move(path.resolve(tempDir, file), path.resolve(cwd, target, file), cb);
+				}, cb);
+			});
 		}
-
-		async.each(files, function (file, cb) {
-			var target = /\.ftl$/.test(file) ? 'FE' : 'html';
-
-			fs.move(path.resolve(cwd, file), path.resolve(cwd, target, file), cb);
-		}, cb);
-	});
+	], cb);
 }
 
 module.exports = config;
