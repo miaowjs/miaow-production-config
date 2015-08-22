@@ -70,7 +70,7 @@ var config = {
 	module: {
 		tasks: [
 			{
-				test: /(require|jquery|jquery\/.*)\.js$/,
+				test: /(require|jquery|jquery\/.*|echarts|echarts\/.*)\.js$/,
 				plugins: [
 					jsMini
 				]
@@ -88,7 +88,7 @@ var config = {
 					{
 						plugin: amdParse,
 						option: {
-							ignore: ['jquery'],
+							ignore: ['jquery', /^echarts/],
 							pack: true
 						}
 					},
