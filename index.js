@@ -70,7 +70,7 @@ var config = {
 	module: {
 		tasks: [
 			{
-				test: /(require|jquery\/?.*|echarts\/?.*|zrender\/?.*)\.js$/,
+				test: /(require|jquery\/.*|echarts\/.*|zrender\/.*)\.js$/,
 				plugins: [
 					jsMini
 				]
