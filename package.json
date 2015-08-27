@@ -1,12 +1,13 @@
 {
 	"name": "miaow-production-config",
 	"description": "生产环境的配置",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"dependencies": {
 		"async": "~0.9.0",
 		"fs-extra": "~0.20.1",
 		"glob": "~5.0.10",
-		"miaow-amd-parse": "~3.0.1",
+		"miaow-amd-parse": "~3.1.1",
+		"miaow-amd-wrap": "~2.0.0",
 		"miaow-css-autoprefixer": "~0.3.0",
 		"miaow-css-mini": "~1.0.0",
 		"miaow-css-pack": "~1.2.0",

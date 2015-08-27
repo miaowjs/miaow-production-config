@@ -7,6 +7,7 @@ var temp = require('temp');
 temp.track();
 
 var amdParse = require('miaow-amd-parse');
+var amdWrap = require('miaow-amd-wrap');
 var autoprefixer = require('miaow-css-autoprefixer');
 var cssMini = require('miaow-css-mini');
 var cssPack = require('miaow-css-pack');
@@ -85,6 +86,7 @@ var config = {
 						}
 					},
 					urlParse,
+					amdWrap,
 					{
 						plugin: amdParse,
 						option: {
