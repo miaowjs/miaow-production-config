@@ -1,7 +1,7 @@
 {
 	"name": "miaow-production-config",
 	"description": "生产环境的配置",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"dependencies": {
 		"async": "~0.9.0",
 		"fs-extra": "~0.20.1",
