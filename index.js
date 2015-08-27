@@ -86,7 +86,6 @@ var config = {
 						}
 					},
 					urlParse,
-					amdWrap,
 					{
 						plugin: amdParse,
 						option: {
