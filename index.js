@@ -69,14 +69,34 @@ var config = {
 	domain: '',
 
 	module: {
-		tasks: [
-			{
+		pluginMap: {
+			amdParse: amdParse,
+			amdWrap: amdWrap,
+			autoprefixer: autoprefixer,
+			cssMini: cssMini,
+			cssPack: cssPack,
+			cssSprite: cssSprite,
+			cssUrlParse: cssUrlParse,
+			ftlParse: ftlParse,
+			inlineContentParse: inlineContentParse,
+			inlineParse: inlineParse,
+			jpgMini: jpgMini,
+			jsMini: jsMini,
+			lessParse: lessParse,
+			pngMini: pngMini,
+			replace: replace,
+			urlParse: urlParse
+		},
+
+		taskMap: {
+			empty: {
 				test: /(require|jquery\/.*|echarts\/.*|zrender\/.*)\.js$/,
 				plugins: [
 					jsMini
 				]
 			},
-			{
+
+			js: {
 				test: /\.js$/,
 				plugins: [
 					{
@@ -98,7 +118,7 @@ var config = {
 				]
 			},
 
-			{
+			css: {
 				test: /\.css$/,
 				plugins: [
 					cssSprite,
@@ -111,7 +131,7 @@ var config = {
 				]
 			},
 
-			{
+			less: {
 				test: /\.less$/,
 				plugins: [
 					urlParse,
@@ -125,7 +145,7 @@ var config = {
 				]
 			},
 
-			{
+			ftl: {
 				test: /\.ftl$/,
 				plugins: [
 					urlParse,
@@ -147,7 +167,7 @@ var config = {
 				]
 			},
 
-			{
+			html: {
 				test: /\.htm[l]?$/,
 				plugins: [
 					urlParse,
@@ -161,20 +181,22 @@ var config = {
 				]
 			},
 
-			{
+			png: {
 				test: /\.png$/,
 				plugins: [
 					pngMini
 				]
 			},
 
-			{
+			jpg: {
 				test: /\.jp[e]?g$/,
 				plugins: [
 					jpgMini
 				]
 			}
-		],
+		},
+
+		tasks: ['empty', 'js', 'css', 'less', 'ftl', 'html', 'png', 'jpg'],
 
 		// 文件生成配置
 		road: [
