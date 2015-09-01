@@ -89,8 +89,10 @@ var config = {
 		},
 
 		taskMap: {
-			empty: {
-				test: /(require|jquery\/.*|echarts\/.*|zrender\/.*)\.js$/,
+			emptyJS: {
+				test: [
+					'**/+(jquery|requirejs|echarts|zrender)/**/*'
+				],
 				plugins: [
 					jsMini
 				]
@@ -196,7 +198,7 @@ var config = {
 			}
 		},
 
-		tasks: ['empty', 'js', 'css', 'less', 'ftl', 'html', 'png', 'jpg'],
+		tasks: ['emptyJS', 'js', 'css', 'less', 'ftl', 'html', 'png', 'jpg'],
 
 		// 文件生成配置
 		road: [
