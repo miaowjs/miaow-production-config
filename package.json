@@ -1,7 +1,7 @@
 {
 	"name": "miaow-production-config",
 	"description": "生产环境的配置",
-	"version": "0.0.13",
+	"version": "0.0.14",
 	"dependencies": {
 		"async": "~0.9.0",
 		"fs-extra": "~0.20.1",
@@ -16,7 +16,7 @@
 		"miaow-inline-parse": "~2.2.1",
 		"miaow-js-mini": "~1.0.0",
 		"miaow-jpg-mini": "~1.1.0",
-		"miaow-less-parse": "~1.7.3",
+		"miaow-less-parse": "~1.7.4",
 		"miaow-png-mini": "~1.1.0",
 		"miaow-replace": "~0.1.1",
 		"miaow-url-parse": "~2.0.1",
