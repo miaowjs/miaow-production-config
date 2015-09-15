@@ -129,7 +129,13 @@ var config = {
 					autoprefixer,
 					cssPack,
 					inlineContentParse,
-					cssMini
+					{
+						plugin: cssMini,
+						option: {
+							advanced: false,
+							compatibility: 'ie7'
+						}
+					}
 				]
 			},
 
@@ -142,7 +148,13 @@ var config = {
 					autoprefixer,
 					cssPack,
 					inlineContentParse,
-					cssMini
+					{
+						plugin: cssMini,
+						option: {
+							advanced: false,
+							compatibility: 'ie7'
+						}
+					}
 				]
 			},
 
