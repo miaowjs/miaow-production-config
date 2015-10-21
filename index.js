@@ -126,7 +126,12 @@ var config = {
 					cssSprite,
 					urlParse,
 					cssUrlParse,
-					autoprefixer,
+					{
+						plugin: autoprefixer,
+						option: {
+							browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Android >= 2.1']
+						}
+					},
 					cssPack,
 					inlineContentParse,
 					{
@@ -145,7 +150,12 @@ var config = {
 					urlParse,
 					lessParse,
 					cssSprite,
-					autoprefixer,
+					{
+						plugin: autoprefixer,
+						option: {
+							browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Android >= 2.1']
+						}
+					},
 					cssPack,
 					inlineContentParse,
 					{
@@ -206,10 +216,18 @@ var config = {
 				plugins: [
 					jpgMini
 				]
+			},
+
+			text: {
+				test: /\.tpl$/,
+				plugins: [
+					urlParse,
+					inlineContentParse
+				]
 			}
 		},
 
-		tasks: ['emptyJS', 'js', 'css', 'less', 'ftl', 'html', 'png', 'jpg'],
+		tasks: ['emptyJS', 'js', 'css', 'less', 'ftl', 'html', 'png', 'jpg', 'text'],
 
 		// 文件生成配置
 		road: [
