@@ -1,44 +1,63 @@
-var async = require('async');
-var fs = require('fs-extra');
-var glob = require('glob');
 var path = require('path');
-var temp = require('temp');
-
-temp.track();
 
 var amdParse = require('miaow-amd-parse');
-var amdWrap = require('miaow-amd-wrap');
-var autoprefixer = require('miaow-css-autoprefixer');
-var cssMini = require('miaow-css-mini');
-var cssPack = require('miaow-css-pack');
-var cssSprite = require('miaow-css-sprite');
+var babelParse = require('miaow-babel-parse');
 var ftlParse = require('miaow-ftl-parse');
 var inlineParse = require('miaow-inline-parse');
-var jpgMini = require('miaow-jpg-mini');
-var jsMini = require('miaow-js-mini');
 var lessParse = require('miaow-less-parse');
-var pngMini = require('miaow-png-mini');
 var replace = require('miaow-replace');
 var urlParse = require('miaow-url-parse');
 
+var jpgMini = require('miaow-jpg-mini');
+var pngMini = require('miaow-png-mini');
+var cssMini = require('miaow-css-mini');
+var cssPack = require('miaow-css-pack');
+var cssSprite = require('miaow-css-sprite');
+
+var ThirdPartyPlugin = require('miaow-thirdparty-plugin');
+var PackPlugin = require('miaow-pack-plugin');
+
+
 var cssUrlParse = {
-	plugin: urlParse,
-	option: {
-		reg: /url\s*\(\s*['"]?([\w_\/\.\-]+)(?:[?#].*?)?['"]?\)/g
+	task: urlParse,
+	options: {
+		regexp: /url\s*\(\s*['"]?([\w_\/\.\-]+)(?:[?#].*?)?['"]?\)/g
 	}
 };
 var inlineContentParse = {
-	plugin: inlineParse,
-	option: {
+	task: inlineParse,
+	options: {
 		regexp: /((?:\/\*|<!--)\s*inline\s+['"]([\w\_\/\.\-]+)['"]\s*(?:\*\/|-->))/g,
 		type: 'content'
+	}
+};
+var debugReplace = {
+	task: replace,
+	options: {
+		replace: [{test: /__debug__/g, value: 'false'}]
+	}
+};
+var autoprefixer = {
+	task: require('miaow-css-autoprefixer'),
+	options: {
+		browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Android >= 2.1']
+	}
+};
+var jsMini = {
+	task: require('miaow-js-mini'),
+	options: {
+		output: {
+			comments: function(node, comment) {
+				return comment.type === 'comment2' && comment.value.charAt(0) === '!';
+			}
+		}
 	}
 };
 
 // 默认配置
 var config = {
 	// 工作目录
-	cwd: path.resolve('./src'),
+	context: path.resolve('./src'),
 
 	// 输出目录
 	output: path.resolve('./release'),
@@ -50,6 +69,9 @@ var config = {
 
 	// 排除目录
 	exclude: [
+		'build/**/*',
+		'cache/**/*',
+		'release/**/*',
 		'**/node_modules/**/*',
 		'**/*.ftl.js',
 		'**/*.md',
@@ -57,10 +79,12 @@ var config = {
 		'**/gulpfile.js',
 		'**/miaow.config.js',
 		'**/miaow.local.js',
-		'**/package.json'
+		'**/package.json',
+		'**/webpack.config.js'
 	],
 
-	hash: 10,
+	// 追加hash
+	hashLength: 10,
 
 	// hash值连接符
 	hashConcat: '.',
@@ -68,220 +92,132 @@ var config = {
 	// 域名
 	domain: '',
 
-	module: {
-		pluginMap: {
-			amdParse: amdParse,
-			amdWrap: amdWrap,
-			autoprefixer: autoprefixer,
-			cssMini: cssMini,
-			cssPack: cssPack,
-			cssSprite: cssSprite,
-			cssUrlParse: cssUrlParse,
-			ftlParse: ftlParse,
-			inlineContentParse: inlineContentParse,
-			inlineParse: inlineParse,
-			jpgMini: jpgMini,
-			jsMini: jsMini,
-			lessParse: lessParse,
-			pngMini: pngMini,
-			replace: replace,
-			urlParse: urlParse
+	plugins: [
+		new ThirdPartyPlugin({test: '*.+(js|es6)', tasks: [jsMini]}),
+		new PackPlugin()
+	],
+
+	modules: [
+		{
+			test: '*.js',
+			release: 'html/$0',
+			tasks: [
+				debugReplace,
+				urlParse,
+				amdParse,
+				jsMini,
+				inlineContentParse
+			]
 		},
 
-		taskMap: {
-			emptyJS: {
-				test: [
-					'**/+(jquery|requirejs|echarts|zrender)/**/*'
-				],
-				plugins: [
-					jsMini
-				]
-			},
-
-			js: {
-				test: /\.js$/,
-				plugins: [
-					{
-						plugin: replace,
-						option: {
-							replace: [{test: /__debug__/g, value: 'false'}]
-						}
-					},
-					urlParse,
-					{
-						plugin: amdParse,
-						option: {
-							ignore: ['jquery', /^echarts/, /^zrender/],
-							pack: true
-						}
-					},
-					inlineContentParse,
-					jsMini
-				]
-			},
-
-			css: {
-				test: /\.css$/,
-				plugins: [
-					cssSprite,
-					urlParse,
-					cssUrlParse,
-					{
-						plugin: autoprefixer,
-						option: {
-							browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Android >= 2.1']
-						}
-					},
-					cssPack,
-					inlineContentParse,
-					{
-						plugin: cssMini,
-						option: {
-							advanced: false,
-							compatibility: 'ie7'
-						}
+		{
+			test: '*.es6',
+			ext: '.js',
+			release: 'html/$0',
+			tasks: [
+				debugReplace,
+				urlParse,
+				{
+					task: babelParse,
+					options: {
+						blacklist: ['strict'],
+						optional: ['es7.classProperties'],
+						modules: 'amd'
 					}
-				]
-			},
-
-			less: {
-				test: /\.less$/,
-				plugins: [
-					urlParse,
-					lessParse,
-					cssSprite,
-					{
-						plugin: autoprefixer,
-						option: {
-							browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Android >= 2.1']
-						}
-					},
-					cssPack,
-					inlineContentParse,
-					{
-						plugin: cssMini,
-						option: {
-							advanced: false,
-							compatibility: 'ie7'
-						}
-					}
-				]
-			},
-
-			ftl: {
-				test: /\.ftl$/,
-				plugins: [
-					urlParse,
-					{
-						plugin: replace,
-						option: {
-							replace: [{test: /__debug__/g, value: 'false'}]
-						}
-					},
-					{
-						plugin: ftlParse,
-						option: {
-							macroNameList: ['static', 'docHead', 'docFoot', 'jsFile', 'cssFile'],
-							macroArgList: ['js', 'css', 'file', 'mockjax'],
-							macroDebug: false
-						}
-					},
-					inlineContentParse
-				]
-			},
-
-			html: {
-				test: /\.htm[l]?$/,
-				plugins: [
-					urlParse,
-					{
-						plugin: replace,
-						option: {
-							replace: [{test: /__debug__/g, value: 'false'}]
-						}
-					},
-					inlineContentParse
-				]
-			},
-
-			png: {
-				test: /\.png$/,
-				plugins: [
-					pngMini
-				]
-			},
-
-			jpg: {
-				test: /\.jp[e]?g$/,
-				plugins: [
-					jpgMini
-				]
-			},
-
-			text: {
-				test: /\.tpl$/,
-				plugins: [
-					urlParse,
-					inlineContentParse
-				]
-			}
+				},
+				amdParse,
+				jsMini,
+				inlineContentParse
+			]
 		},
 
-		tasks: ['emptyJS', 'js', 'css', 'less', 'ftl', 'html', 'png', 'jpg', 'text'],
+		{
+			test: '*.css',
+			release: 'html/$0',
+			tasks: [
+				cssSprite,
+				urlParse,
+				cssUrlParse,
+				autoprefixer,
+				cssMini,
+				cssPack,
+				inlineContentParse
+			]
+		},
 
-		// 文件生成配置
-		road: [
-			{
-				test: /\.ftl$/,
-				useHash: false,
-				domain: ''
-			},
+		{
+			test: '*.less',
+			ext: '.css',
+			release: 'html/$0',
+			tasks: [
+				urlParse,
+				lessParse,
+				cssSprite,
+				autoprefixer,
+				cssMini,
+				cssPack,
+				inlineContentParse
+			]
+		},
 
-			{
-				test: /(.*)\.less$/,
-				release: '$1.css'
-			}
-		]
-	},
+		{
+			test: '*.ftl',
+			domain: '',
+			release: 'FE/$0',
+			hashLength: 0,
+			tasks: [
+				urlParse,
+				debugReplace,
+				{
+					task: ftlParse,
+					options: {
+						macroNameList: ['static', 'docHead', 'docFoot', 'jsFile', 'cssFile'],
+						macroArgList: ['js', 'css', 'file', 'mockjax']
+					}
+				},
+				inlineContentParse
+			]
+		},
+
+		{
+			test: '*.+(html|tpl)',
+			release: 'html/$0',
+			tasks: [
+				urlParse,
+				debugReplace,
+				inlineContentParse
+			]
+		},
+
+		{
+			test: '*.+(jpg|jpeg)',
+			release: 'html/$0',
+			tasks: [
+				jpgMini
+			]
+		},
+
+		{
+			test: '*.png',
+			release: 'html/$0',
+			tasks: [
+				pngMini
+			]
+		},
+
+		{
+			test: '*.*',
+			release: 'html/$0'
+		}
+	],
 
 	resolve: {
 		moduleDirectory: ['common', ".remote"],
-		extensions: ['.js'],
+		extensions: ['.js', '.es6'],
 		extensionAlias: {
 			'.css': ['.less']
 		}
-	},
-
-	nextTasks: [
-		moveFile
-	]
+	}
 };
-
-function moveFile(option, cb) {
-	var cwd = this.config.output;
-	var tempDir = temp.mkdirSync();
-
-	async.series([
-		fs.copy.bind(fs, cwd, tempDir),
-		fs.emptyDir.bind(fs, cwd),
-		function (cb) {
-			glob('**/*', {
-				dot: true,
-				cwd: tempDir,
-				nodir: true
-			}, function (err, files) {
-				if (err) {
-					return cb(err);
-				}
-
-				async.each(files, function (file, cb) {
-					var target = /\.ftl$/.test(file) ? 'FE' : 'html';
-
-					fs.move(path.resolve(tempDir, file), path.resolve(cwd, target, file), cb);
-				}, cb);
-			});
-		}
-	], cb);
-}
 
 module.exports = config;
