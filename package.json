@@ -1,7 +1,7 @@
 {
 	"name": "miaow-production-config",
 	"description": "生产环境的配置",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"repository": "miaowjs/miaow-production-config",
 	"author": {
 		"name": "anhulife",
@@ -22,8 +22,8 @@
 		"miaow-png-mini": "~2.0.0",
 		"miaow-replace": "~1.0.0",
 		"miaow-url-parse": "~3.0.1",
-		"miaow-pack-plugin": "~0.0.2",
-		"miaow-thirdparty-plugin": "~0.0.1"
+		"miaow-pack-plugin": "~0.1.0",
+		"miaow-thirdparty-plugin": "~0.1.1"
 	},
 	"scripts": {
 		"postpublish": "cnpm sync miaow-production-config"
