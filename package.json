@@ -1,14 +1,14 @@
 {
 	"name": "miaow-production-config",
 	"description": "生产环境的配置",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"repository": "miaowjs/miaow-production-config",
 	"author": {
 		"name": "anhulife",
 		"email": "anhulife@gmail.com"
 	},
 	"dependencies": {
-		"miaow-amd-parse": "~4.0.6",
+		"miaow-amd-parse": "~4.0.7",
 		"miaow-babel-parse": "~1.0.0",
 		"miaow-css-autoprefixer": "~1.0.0",
 		"miaow-css-mini": "~2.0.0",
