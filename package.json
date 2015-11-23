@@ -1,7 +1,7 @@
 {
 	"name": "miaow-production-config",
 	"description": "生产环境的配置",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"repository": "miaowjs/miaow-production-config",
 	"author": {
 		"name": "anhulife",
@@ -10,15 +10,15 @@
 	"dependencies": {
 		"miaow-amd-parse": "~4.0.7",
 		"miaow-babel-parse": "~1.0.0",
-		"miaow-css-autoprefixer": "~1.0.0",
+		"miaow-css-autoprefixer": "~1.0.1",
 		"miaow-css-mini": "~2.0.0",
 		"miaow-css-pack": "~2.0.1",
-		"miaow-css-sprite": "~3.0.1",
+		"miaow-css-sprite": "~3.0.2",
 		"miaow-ftl-parse": "~2.0.1",
 		"miaow-inline-parse": "~3.0.1",
 		"miaow-js-mini": "~2.0.0",
 		"miaow-jpg-mini": "~2.0.0",
-		"miaow-less-parse": "~2.0.3",
+		"miaow-less-parse": "~2.0.4",
 		"miaow-png-mini": "~2.0.0",
 		"miaow-replace": "~1.0.0",
 		"miaow-url-parse": "~3.0.1",
