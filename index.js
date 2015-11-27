@@ -17,13 +17,13 @@ var cssSprite = require('miaow-css-sprite');
 var ThirdPartyPlugin = require('miaow-thirdparty-plugin');
 var PackPlugin = require('miaow-pack-plugin');
 
-
 var cssUrlParse = {
 	task: urlParse,
 	options: {
 		regexp: /url\s*\(\s*['"]?([\w_\/\.\-]+)(?:[?#].*?)?['"]?\)/g
 	}
 };
+
 var inlineContentParse = {
 	task: inlineParse,
 	options: {
@@ -31,18 +31,21 @@ var inlineContentParse = {
 		type: 'content'
 	}
 };
+
 var debugReplace = {
 	task: replace,
 	options: {
 		replace: [{test: /__debug__/g, value: 'false'}]
 	}
 };
+
 var autoprefixer = {
 	task: require('miaow-css-autoprefixer'),
 	options: {
 		browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Android >= 2.1']
 	}
 };
+
 var jsMini = {
 	task: require('miaow-js-mini'),
 	options: {
@@ -92,6 +95,9 @@ var config = {
 	// 域名
 	domain: '',
 
+	// 是否调试
+	debug: false,
+
 	plugins: [
 		new ThirdPartyPlugin({test: '*.+(js|es6)', tasks: [jsMini]}),
 		new PackPlugin()
@@ -103,6 +109,7 @@ var config = {
 			release: 'html/$0',
 			tasks: [
 				debugReplace,
+				inlineParse,
 				urlParse,
 				amdParse,
 				jsMini,
@@ -116,6 +123,7 @@ var config = {
 			release: 'html/$0',
 			tasks: [
 				debugReplace,
+				inlineParse,
 				urlParse,
 				{
 					task: babelParse,
@@ -136,6 +144,7 @@ var config = {
 			release: 'html/$0',
 			tasks: [
 				cssSprite,
+				inlineParse,
 				urlParse,
 				cssUrlParse,
 				autoprefixer,
@@ -150,6 +159,7 @@ var config = {
 			ext: '.css',
 			release: 'html/$0',
 			tasks: [
+				inlineParse,
 				urlParse,
 				lessParse,
 				cssSprite,
@@ -166,6 +176,7 @@ var config = {
 			release: 'FE/$0',
 			hashLength: 0,
 			tasks: [
+				inlineParse,
 				urlParse,
 				debugReplace,
 				{
@@ -180,9 +191,10 @@ var config = {
 		},
 
 		{
-			test: '*.+(html|tpl)',
+			test: '*.+(htm|html|tpl)',
 			release: 'html/$0',
 			tasks: [
+				inlineParse,
 				urlParse,
 				debugReplace,
 				inlineContentParse
@@ -212,10 +224,11 @@ var config = {
 	],
 
 	resolve: {
-		moduleDirectory: ['common', ".remote"],
+		moduleDirectory: ['common', '.remote'],
 		extensions: ['.js', '.es6'],
 		extensionAlias: {
-			'.css': ['.less']
+			'.css': ['.less'],
+			'.js': ['.es6']
 		}
 	}
 };
