@@ -112,8 +112,8 @@ var config = {
 				inlineParse,
 				urlParse,
 				amdParse,
-				jsMini,
-				inlineContentParse
+				inlineContentParse,
+				jsMini
 			]
 		},
 
@@ -134,8 +134,8 @@ var config = {
 					}
 				},
 				amdParse,
-				jsMini,
-				inlineContentParse
+				inlineContentParse,
+				jsMini
 			]
 		},
 
@@ -148,9 +148,9 @@ var config = {
 				urlParse,
 				cssUrlParse,
 				autoprefixer,
+				inlineContentParse,
 				cssMini,
-				cssPack,
-				inlineContentParse
+				cssPack
 			]
 		},
 
@@ -164,9 +164,9 @@ var config = {
 				lessParse,
 				cssSprite,
 				autoprefixer,
+				inlineContentParse,
 				cssMini,
-				cssPack,
-				inlineContentParse
+				cssPack
 			]
 		},
 
