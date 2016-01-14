@@ -10,7 +10,6 @@ var urlParse = require('miaow-url-parse');
 
 var jpgMini = require('miaow-jpg-mini');
 var pngMini = require('miaow-png-mini');
-var cssMini = require('miaow-css-mini');
 var cssPack = require('miaow-css-pack');
 var cssSprite = require('miaow-css-sprite');
 
@@ -54,6 +53,13 @@ var jsMini = {
 				return comment.type === 'comment2' && comment.value.charAt(0) === '!';
 			}
 		}
+	}
+};
+
+var cssMini = {
+	task: require('miaow-css-mini'),
+	options: {
+		compatibility: 'ie7'
 	}
 };
 
