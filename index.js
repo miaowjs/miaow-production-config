@@ -88,7 +88,6 @@ var config = {
 		'**/gulpfile.js',
 		'**/miaow.config.js',
 		'**/miaow.local.js',
-		'**/package.json',
 		'**/webpack.config.js'
 	],
 
