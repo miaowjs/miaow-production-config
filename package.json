@@ -22,7 +22,7 @@
 		"miaow-png-mini": "~2.0.0",
 		"miaow-replace": "~1.0.0",
 		"miaow-url-parse": "~3.0.1",
-		"miaow-pack-plugin": "~1.0.0",
+		"miaow-pack-plugin": "~1.0.1",
 		"miaow-thirdparty-plugin": "~0.1.1"
 	},
 	"scripts": {
