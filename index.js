@@ -19,7 +19,7 @@ var PackPlugin = require('miaow-pack-plugin');
 var cssUrlParse = {
 	task: urlParse,
 	options: {
-		regexp: /url\s*\(\s*['"]?([\w_\/\.\-]+)(?:[?#].*?)?['"]?\)/g
+		regexp: /url\s*\(\s*['"]?([^\/][\w_\/\.\-]*)(?:[?#].*?)?['"]?\)/g
 	}
 };
 
