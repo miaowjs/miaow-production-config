@@ -168,6 +168,7 @@ var config = {
 				urlParse,
 				lessParse,
 				cssSprite,
+				cssUrlParse,
 				autoprefixer,
 				inlineContentParse,
 				cssMini,
