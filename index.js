@@ -12,6 +12,7 @@ var jpgMini = require('miaow-jpg-mini');
 var pngMini = require('miaow-png-mini');
 var cssPack = require('miaow-css-pack');
 var cssSprite = require('miaow-css-sprite');
+var lowbandwidth = require('miaow-lowbandwidth-task');
 
 var ThirdPartyPlugin = require('miaow-thirdparty-plugin');
 var PackPlugin = require('miaow-pack-plugin');
@@ -145,12 +146,44 @@ var config = {
 		},
 
 		{
+			test: 'mobile/**/*.css',
+			release: 'html/$0',
+			tasks: [
+				lowbandwidth,
+				inlineParse,
+				urlParse,
+				cssUrlParse,
+				autoprefixer,
+				inlineContentParse,
+				cssMini,
+				cssPack
+			]
+		},
+
+		{
 			test: '*.css',
 			release: 'html/$0',
 			tasks: [
 				cssSprite,
 				inlineParse,
 				urlParse,
+				cssUrlParse,
+				autoprefixer,
+				inlineContentParse,
+				cssMini,
+				cssPack
+			]
+		},
+
+		{
+			test: 'mobile/**/*.less',
+			ext: '.css',
+			release: 'html/$0',
+			tasks: [
+				inlineParse,
+				urlParse,
+				lessParse,
+				lowbandwidth,
 				cssUrlParse,
 				autoprefixer,
 				inlineContentParse,

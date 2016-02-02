@@ -19,6 +19,7 @@
 		"miaow-js-mini": "~2.0.0",
 		"miaow-jpg-mini": "~2.0.0",
 		"miaow-less-parse": "~3.0.0",
+		"miaow-lowbandwidth-task": "~0.1.0",
 		"miaow-png-mini": "~2.0.0",
 		"miaow-replace": "~1.0.0",
 		"miaow-url-parse": "~3.0.1",
