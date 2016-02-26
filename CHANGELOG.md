@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.4.0
+
+* 添加低带宽处理
+* 更新 CSS 的 URL 匹配正则表达式
+* 更新 LESS 编译工具版本，LESS 编译工具不再补全 URL 地址
+
 ### 1.3.2
 
 * 完善 Autoprefixer 的浏览器版本设置
