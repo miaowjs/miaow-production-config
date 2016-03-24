@@ -82,6 +82,7 @@ var config = {
 		'build/**/*',
 		'cache/**/*',
 		'release/**/*',
+		'**/bower_components/**/*',
 		'**/node_modules/**/*',
 		'**/*.ftl.js',
 		'**/*.md',
@@ -263,7 +264,7 @@ var config = {
 	],
 
 	resolve: {
-		moduleDirectory: ['common', '.remote'],
+		moduleDirectory: ['common', '.remote', 'bower_components'],
 		extensions: ['.js', '.es6'],
 		extensionAlias: {
 			'.css': ['.less'],
