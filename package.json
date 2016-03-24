@@ -8,7 +8,7 @@
 		"email": "anhulife@gmail.com"
 	},
 	"dependencies": {
-		"miaow-amd-parse": "~4.2.1",
+		"miaow-amd-parse": "~4.3.0",
 		"miaow-babel-parse": "~1.0.0",
 		"miaow-css-autoprefixer": "~1.0.1",
 		"miaow-css-mini": "~2.0.0",
