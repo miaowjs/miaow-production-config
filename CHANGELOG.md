@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.4.2
+
+* 增加`bower_components`目录的处理
+* 更新 AMD 插件的依赖版本
+
 ### 1.4.1
 
 * 修复样式文件的 URL 匹配正则表达式, 避免匹配 url('//foo.com/foo.png') 出问题
