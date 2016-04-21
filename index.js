@@ -32,10 +32,13 @@ var inlineContentParse = {
 	}
 };
 
-var debugReplace = {
+var contentReplace = {
 	task: replace,
 	options: {
-		replace: [{test: /__debug__/g, value: 'false'}]
+		replace: [
+			{test: /__debug__/g, value: '<%= debug %>'},
+			{test: /__cdn__/g, value: '<%= domain %>'}
+		]
 	}
 };
 
@@ -63,6 +66,58 @@ var cssMini = {
 		compatibility: 'ie7'
 	}
 };
+
+// 老系统的代码
+var oldModules = [
+	{
+		test: 'old/**/*.js',
+		release: 'html/$0',
+		tasks: [
+			contentReplace,
+			jsMini
+		]
+	},
+	{
+		test: 'old/**/*.css',
+		release: 'html/$0',
+		tasks: [
+			contentReplace,
+			cssMini
+		]
+	},
+	{
+		test: 'old/**/*.ftl',
+		release: 'FE/$0',
+		tasks: [
+			contentReplace
+		]
+	},
+	{
+		test: 'old/**/*.+(htm|html|tpl)',
+		release: 'html/$0',
+		tasks: [
+			contentReplace
+		]
+	},
+	{
+		test: 'old/**/*.+(jpg|jpeg)',
+		release: 'html/$0',
+		tasks: [
+			jpgMini
+		]
+	},
+	{
+		test: 'old/**/*.png',
+		release: 'html/$0',
+		tasks: [
+			pngMini
+		]
+	},
+	{
+		test: 'old/**/*.*',
+		release: 'html/$0'
+	}
+];
 
 // 默认配置
 var config = {
@@ -110,12 +165,12 @@ var config = {
 		new PackPlugin()
 	],
 
-	modules: [
+	modules: oldModules.concat([
 		{
 			test: '*.js',
 			release: 'html/$0',
 			tasks: [
-				debugReplace,
+				contentReplace,
 				inlineParse,
 				urlParse,
 				amdParse,
@@ -129,7 +184,7 @@ var config = {
 			ext: '.js',
 			release: 'html/$0',
 			tasks: [
-				debugReplace,
+				contentReplace,
 				inlineParse,
 				urlParse,
 				{
@@ -218,7 +273,7 @@ var config = {
 			tasks: [
 				inlineParse,
 				urlParse,
-				debugReplace,
+				contentReplace,
 				{
 					task: ftlParse,
 					options: {
@@ -236,7 +291,7 @@ var config = {
 			tasks: [
 				inlineParse,
 				urlParse,
-				debugReplace,
+				contentReplace,
 				inlineContentParse
 			]
 		},
@@ -261,7 +316,7 @@ var config = {
 			test: '*.*',
 			release: 'html/$0'
 		}
-	],
+	]),
 
 	resolve: {
 		moduleDirectory: ['common', '.remote', 'bower_components'],
