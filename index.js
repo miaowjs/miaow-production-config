@@ -88,20 +88,6 @@ var oldModules = [
 		release: 'FE/$0'
 	},
 	{
-		test: 'old/**/*.+(jpg|jpeg)',
-		release: 'html/$0',
-		tasks: [
-			jpgMini
-		]
-	},
-	{
-		test: 'old/**/*.png',
-		release: 'html/$0',
-		tasks: [
-			pngMini
-		]
-	},
-	{
 		test: 'old/**/*.*',
 		release: 'html/$0'
 	}
