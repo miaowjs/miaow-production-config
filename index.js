@@ -73,7 +73,6 @@ var oldModules = [
 		test: 'old/**/*.js',
 		release: 'html/$0',
 		tasks: [
-			contentReplace,
 			jsMini
 		]
 	},
@@ -81,23 +80,12 @@ var oldModules = [
 		test: 'old/**/*.css',
 		release: 'html/$0',
 		tasks: [
-			contentReplace,
 			cssMini
 		]
 	},
 	{
 		test: 'old/**/*.ftl',
-		release: 'FE/$0',
-		tasks: [
-			contentReplace
-		]
-	},
-	{
-		test: 'old/**/*.+(htm|html|tpl)',
-		release: 'html/$0',
-		tasks: [
-			contentReplace
-		]
+		release: 'FE/$0'
 	},
 	{
 		test: 'old/**/*.+(jpg|jpeg)',
