@@ -1,7 +1,7 @@
 {
 	"name": "miaow-production-config",
 	"description": "生产环境的配置",
-	"version": "1.7.0",
+	"version": "1.8.0",
 	"repository": "miaowjs/miaow-production-config",
 	"author": {
 		"name": "anhulife",
