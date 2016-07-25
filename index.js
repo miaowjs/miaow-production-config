@@ -63,7 +63,8 @@ var jsMini = {
 var cssMini = {
 	task: require('miaow-css-mini'),
 	options: {
-		compatibility: 'ie7'
+		compatibility: 'ie7',
+		advanced: false
 	}
 };
 
