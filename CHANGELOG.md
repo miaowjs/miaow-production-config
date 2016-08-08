@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.9.0
+
+* 更新`AMD`模块插件版本，增加`CSS Modules`部分支持，暂不支持`Composition`功能
+
 ### 1.8.0
 
 * 取消样式压缩的高级处理
