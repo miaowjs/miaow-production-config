@@ -7,6 +7,7 @@ var inlineParse = require('miaow-inline-parse');
 var lessParse = require('miaow-less-parse');
 var replace = require('miaow-replace');
 var urlParse = require('miaow-url-parse');
+var vueParse = require('miaow-vue-parse');
 
 var jpgMini = require('miaow-jpg-mini');
 var pngMini = require('miaow-png-mini');
@@ -170,6 +171,21 @@ var config = {
 						modules: 'amd'
 					}
 				},
+				amdParse,
+				inlineContentParse,
+				jsMini
+			]
+		},
+
+		{
+			test: '*.vue',
+			ext: '.vue.js',
+			release: 'html/$0',
+			tasks: [
+				contentReplace,
+				inlineParse,
+				urlParse,
+				vueParse,
 				amdParse,
 				inlineContentParse,
 				jsMini
