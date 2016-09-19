@@ -90,7 +90,7 @@ var oldModules = [
 		release: 'FE/$0'
 	},
 	{
-		test: 'old/**/*.*',
+		test: 'old/**/*',
 		release: 'html/$0'
 	}
 ];
@@ -304,7 +304,7 @@ var config = {
 		},
 
 		{
-			test: '*.*',
+			test: '*',
 			release: 'html/$0'
 		}
 	]),
