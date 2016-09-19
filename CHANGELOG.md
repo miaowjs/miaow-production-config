@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.9.1
+
+* 修改默认文件的匹配符
+
 ### 1.9.0
 
 * 更新`AMD`模块插件版本，增加`CSS Modules`部分支持，暂不支持`Composition`功能
