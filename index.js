@@ -37,6 +37,7 @@ var contentReplace = {
 	task: replace,
 	options: {
 		replace: [
+			{test: /__environment__/g, value: '<%= environment %>'},
 			{test: /__debug__/g, value: '<%= debug %>'},
 			{test: /__cdn__/g, value: '<%= domain %>'}
 		]
