@@ -1,13 +1,12 @@
 var path = require('path');
 
 var amdParse = require('miaow-amd-parse');
-var babelParse = require('miaow-babel-parse');
 var ftlParse = require('miaow-ftl-parse');
 var inlineParse = require('miaow-inline-parse');
 var lessParse = require('miaow-less-parse');
 var replace = require('miaow-replace');
 var urlParse = require('miaow-url-parse');
-var vueParse = require('miaow-vue-parse');
+var vueParse = require('miaow-vue-parse2');
 
 var jpgMini = require('miaow-jpg-mini');
 var pngMini = require('miaow-png-mini');
@@ -17,6 +16,16 @@ var lowbandwidth = require('miaow-lowbandwidth-task');
 
 var ThirdPartyPlugin = require('miaow-thirdparty-plugin');
 var PackPlugin = require('miaow-pack-plugin');
+
+var babelParse = {
+	task: require('miaow-babel-parse'),
+	options: {
+		blacklist: ['strict'],
+		optional: ['es7.classProperties'],
+		modules: 'amd'
+	}
+};
+
 
 var cssUrlParse = {
 	task: urlParse,
@@ -164,14 +173,7 @@ var config = {
 				contentReplace,
 				inlineParse,
 				urlParse,
-				{
-					task: babelParse,
-					options: {
-						blacklist: ['strict'],
-						optional: ['es7.classProperties'],
-						modules: 'amd'
-					}
-				},
+				babelParse,
 				amdParse,
 				inlineContentParse,
 				jsMini
@@ -187,6 +189,7 @@ var config = {
 				inlineParse,
 				urlParse,
 				vueParse,
+				babelParse,
 				amdParse,
 				inlineContentParse,
 				jsMini
