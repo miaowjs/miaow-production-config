@@ -1,6 +1,7 @@
 var path = require('path');
 
 var amdParse = require('miaow-amd-parse');
+var babelParse = require('miaow-babel-parse');
 var ftlParse = require('miaow-ftl-parse');
 var inlineParse = require('miaow-inline-parse');
 var lessParse = require('miaow-less-parse');
@@ -16,16 +17,6 @@ var lowbandwidth = require('miaow-lowbandwidth-task');
 
 var ThirdPartyPlugin = require('miaow-thirdparty-plugin');
 var PackPlugin = require('miaow-pack-plugin');
-
-var babelParse = {
-	task: require('miaow-babel-parse'),
-	options: {
-		blacklist: ['strict'],
-		optional: ['es7.classProperties'],
-		modules: 'amd'
-	}
-};
-
 
 var cssUrlParse = {
 	task: urlParse,

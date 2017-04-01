@@ -9,7 +9,7 @@
 	},
 	"dependencies": {
 		"miaow-amd-parse": "~4.6.0",
-		"miaow-babel-parse": "~1.1.0",
+		"miaow-babel-parse": "~2.1.0",
 		"miaow-css-autoprefixer": "~1.1.0",
 		"miaow-css-mini": "~2.1.0",
 		"miaow-css-pack": "~2.1.0",
